@@ -1,0 +1,26 @@
+- name: Bootstrap ansible user
+  hosts: all
+  gather_facts: false
+  become: true
+  vars_prompt:
+    - name: ansible_user
+      prompt: User on serveraku
+      private: false
+    - name: ansible_become_password
+      prompt: Enter password
+      private: true
+  tasks:
+    - name: Install Python for Ansible
+      ansible.builtin.raw: |
+        if [ -e /usr/bin/python3 ]; then
+          echo present
+        else
+          apt-get update && apt-get install -y python3 && echo installed
+        fi
+      register: python_install
+      changed_when: "'installed' in python_install.stdout"
+
+    - name: Configure ansible user
+      ansible.builtin.import_role:
+        name: common
+        tasks_from: ansible_user
