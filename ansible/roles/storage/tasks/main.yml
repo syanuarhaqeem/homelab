@@ -1,0 +1,8 @@
+- name: Mount HDD
+  ansible.posix.mount:
+    path: "{{ storage_mount }}"
+    src: "UUID={{ storage_uuid }}"
+    fstype: ext4
+    opts: defaults,nofail
+    passno: 2
+    state: mounted
