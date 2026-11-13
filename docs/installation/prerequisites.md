@@ -63,7 +63,7 @@ sudo dnf install git gh pipx age opentofu
 sudo dnf install ~/Downloads/sops*.rpm
 ````
 
-Ansible via pipx:
+Install Ansible via pipx.
 
 ````bash
 pipx ensurepath
@@ -88,16 +88,13 @@ sops --version
 age --version
 ````
 
-### Git and GitHub
-
-Authenticate with GitHub and setup local git.
+### Clone the repository
 
 ````bash
-git config --global user.name "<name>"
-git config --global user.email "<id>+<username>@users.noreply.github.com"
-git config --global init.defaultBranch main
-
 gh auth login
+gh repo clone syanuarhaqeem/homelab ~/Projects/homelab
+cd ~/Projects/homelab/ansible
+ansible-galaxy collection install -r requirements.yml
 ````
 
 ### SSH Key

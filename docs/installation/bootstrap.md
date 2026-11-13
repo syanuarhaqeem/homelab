@@ -59,3 +59,24 @@ Copy SSH key into `serveraku` and test.
 ssh-copy-id -i ~/.ssh/workstation serveraku
 ssh serveraku
 ````
+
+## 4. Update Ansible variables
+
+Update the values in `ansible/inventory/hosts.yml`
+
+| Variable | Where to get it |
+|---|---|
+| `storage_uuid` | `sudo blkid` on `serveraku` |
+| `ansible_public_keys` | `cat ~/.ssh/workstation.pub` on `workstation` |
+
+## 5. Run Ansible
+
+On `workstation`:
+
+````bash
+cd ~/Projects/homelab/ansible
+ansible-playbook playbooks/bootstrap.yml
+ansible-playbook playbooks/site.yml
+````
+
+Enter the username for the user with sudo privileges and its password to bootstrap the ansible user.
