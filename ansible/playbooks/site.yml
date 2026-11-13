@@ -1,0 +1,5 @@
+- name: Configure serveraku
+  hosts: all
+  become: true
+  roles:
+    - common

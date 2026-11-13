@@ -1,0 +1,5 @@
+- name: Configure ansible user
+  ansible.builtin.import_tasks: ansible_user.yml
+
+- name: Configure SSH
+  ansible.builtin.import_tasks: ssh.yml
