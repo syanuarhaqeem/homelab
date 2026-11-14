@@ -75,7 +75,7 @@ Open a new terminal, then:
 pipx install --include-deps ansible-core
 ````
 
-### Verify
+### Verify prerequisite tools
 
 Verify that all prerequisite tools have been installed.
 
@@ -117,6 +117,22 @@ Host serveraku serveraku.home.arpa 192.168.100.200
 EOF
 chmod 600 ~/.ssh/config
 ````
+
+### sops: age key
+
+Restore the key to `~/.config/sops/age/keys.txt` then `chmod 600`.
+
+For first time setup:
+
+````bash
+mkdir -p ~/.config/sops/age
+age-keygen -o ~/.config/sops/age/keys.txt
+chmod 600 ~/.config/sops/age/keys.txt
+````
+
+Copy the public key into `sops.yml`.
+
+***Back up the private key!***
 
 ## 4. External services
 
