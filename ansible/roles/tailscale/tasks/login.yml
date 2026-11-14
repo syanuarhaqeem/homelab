@@ -1,0 +1,16 @@
+- name: Check status of Tailscale login
+  ansible.builtin.command: tailscale status
+  register: tailscale_status
+  changed_when: false
+  failed_when: false
+
+# Only log in when logged out. Later changes to these flags
+# are not applied; use 'tailscale set' on the host instead.
+- name: Login to Tailscale
+  ansible.builtin.command: >-
+    tailscale up
+    --auth-key {{ tailscale_auth_key }}
+    --advertise-routes=192.168.100.0/24
+    --advertise-exit-node
+  when: tailscale_status.rc != 0
+  no_log: true
