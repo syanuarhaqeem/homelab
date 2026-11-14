@@ -2,6 +2,8 @@
   hosts: all
   gather_facts: false
   become: true
+  # Prompted values override inventory values, the bootstrap process will
+  # connect as existing user from Debian installation until user 'ansible' exists.
   vars_prompt:
     - name: ansible_user
       prompt: User on serveraku
@@ -10,6 +12,8 @@
       prompt: Enter password
       private: true
   tasks:
+    # Ansible modules need Python.
+    # python3-apt: required by the apt module in --check mode
     - name: Install Python for Ansible
       ansible.builtin.raw: |
         if [ -e /usr/bin/python3 ] && dpkg -s python3-apt >/dev/null 2>&1; then

@@ -7,7 +7,9 @@
 - name: Add apt repository
   ansible.builtin.copy:
     dest: /etc/apt/sources.list.d/tailscale.list
-    content: "deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg] https://pkgs.tailscale.com/stable/debian trixie main\n"
+    content: >
+      deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg]
+      https://pkgs.tailscale.com/stable/debian trixie main
     mode: "0644"
 
 - name: Install Tailscale

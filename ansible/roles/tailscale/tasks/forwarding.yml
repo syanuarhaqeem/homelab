@@ -1,3 +1,4 @@
+# Required for subnet router and exit node (Tailscale docs).
 - name: Forward IPv4 and IPv6 traffic
   ansible.posix.sysctl:
     name: "{{ item }}"
