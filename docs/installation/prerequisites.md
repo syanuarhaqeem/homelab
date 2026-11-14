@@ -130,7 +130,7 @@ age-keygen -o ~/.config/sops/age/keys.txt
 chmod 600 ~/.config/sops/age/keys.txt
 ````
 
-Copy the public key into `sops.yml`.
+Copy the public key into `.sops.yml`.
 
 ***Back up the private key!***
 
