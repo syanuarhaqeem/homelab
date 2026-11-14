@@ -1,0 +1,8 @@
+- name: Install Tailscale
+  ansible.builtin.import_tasks: install.yml
+
+- name: Forward Tailscale traffic to the local network
+  ansible.builtin.import_tasks: forwarding.yml
+
+- name: Login to Tailscale
+  ansible.builtin.import_tasks: login.yml

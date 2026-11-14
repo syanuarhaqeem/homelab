@@ -60,7 +60,37 @@ ssh-copy-id -i ~/.ssh/workstation serveraku
 ssh serveraku
 ````
 
-## 4. Update Ansible variables
+## 4. Configure Tailscale
+
+On `workstation`:
+
+1. Log into Tailscale UI
+
+2. Access controls > JSON editor:
+
+````json
+"tagOwners": {
+	"tag:homelab": ["autogroup:admin"],
+},
+````
+
+3. Settings > Keys. Generate auth key. Tag with `homelab`, leave everything else on default. Copy the generated key.
+
+4. From project root, run:
+
+````bash
+sops ansible/inventory/group_vars/all.sops.yml
+````
+
+Add/replace entry:
+
+````yaml
+tailscale_auth_key: AUTH_KEY
+````
+
+## 5. Update Ansible variables
+
+On `workstation`:
 
 Update the values in `ansible/inventory/hosts.yml`
 
@@ -69,7 +99,7 @@ Update the values in `ansible/inventory/hosts.yml`
 | `storage_uuid` | `sudo blkid` on `serveraku` |
 | `ansible_public_keys` | `cat ~/.ssh/workstation.pub` on `workstation` |
 
-## 5. Run Ansible
+## 6. Run Ansible
 
 On `workstation`:
 
@@ -80,3 +110,5 @@ ansible-playbook playbooks/site.yml
 ````
 
 Enter the username for the user with sudo privileges and its password to bootstrap the ansible user.
+
+From Tailscale UI > Network > Machines: under `serveraku`, approve the subnet route and optionally exit node (for proxying devices traffic through the same network as `serveraku`).
