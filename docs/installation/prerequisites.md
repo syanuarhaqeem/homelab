@@ -142,7 +142,7 @@ List of free external services this homelab uses.
 |---|---|
 | GitHub | Repository |
 | Tailscale | Remote access VPN |
-| Cloudflare | DNS for `byanuar.com` for ACME DNS-01 challenge |
+| Cloudflare | DNS for `byanuar.com` for ACME DNS-01 challenge, R2 object storage free tier (requires card) |
 
 ## Next
 
