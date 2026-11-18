@@ -88,7 +88,37 @@ Add/replace entry:
 tailscale_auth_key: AUTH_KEY
 ````
 
-## 5. Update Ansible variables
+## 5. Configure OpenTofu & Cloudflare R2
+
+OpenTofu states are stored in R2 bucket, encrypted with passphrase from `sops`.
+
+In Cloudflare:
+
+1. Enable R2 object storage
+2. Create bucket `homelab-tofu-state` (storage class: Standard)
+3. Create 'account' API token with object read & write permission. Also limit scope to `homelab-tofu-state` only
+4. Copy the Access Key ID and Secret Access Key. Also copy Cloudflare Account ID
+
+On `workstation`:
+
+In project root,
+
+````bash
+sops opentofu/secrets.sops.yml
+````
+
+Insert copied Access Key ID, Secret Access Key, and Account ID copied previously into `opentofu/secrets.sops.yml`
+
+Keep existing `TF_VAR_state_passphrase`. On new setups, passphrases can be generated with: `openssl rand -base64 32`.
+
+Initialize.
+
+```bash
+cd opentofu
+sops exec-env secrets.sops.yml 'tofu init'
+```
+
+## 6. Update Ansible variables
 
 On `workstation`:
 
@@ -99,7 +129,7 @@ Update the values in `ansible/inventory/hosts.yml`
 | `storage_uuid` | `sudo blkid` on `serveraku` |
 | `ansible_public_keys` | `cat ~/.ssh/workstation.pub` on `workstation` |
 
-## 6. Run Ansible
+## 7. Run Ansible
 
 On `workstation`:
 
